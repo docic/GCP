@@ -1,0 +1,153 @@
+########Console and Cloud Shell 
+########Overview In this lab, you become familiar with the Google Cloud Command Line.
+Objectives
+
+####In this lab, you learn how to perform the following tasks:
+
+    -Get access to Google Cloud remotely from terminal.
+
+    -Create a Cloud Storage bucket using Cloud Shell.
+
+    -Become familiar with Cloud Shell features
+    
+###Task1:Login to GCP via command line remotely on computer. 
+#Ensure GCP SDK is installed in your computer by running...  
+
+           gcloud init
+           
+Result:Opens a browser and asks you to enter gcp credentials.
+
+##alternatively,
+
+            gcloud auth login 
+            
+            
+###Task 2: Create a bucket using Cloud Shell
+
+            gsutil mb gs://<BUCKET_NAME>
+
+###**Replace <BUCKET_NAME> with a unique name for your storage bucket.**###
+
+###Task3: Create another bucket using cloud shell
+
+            gsutil mb gs://<BUCKET_NAME2>
+
+
+###Task4: Upload a file on bucket.
+
+####To upload files or copy files from your computer to a storage bucket <BUCKET_NAME>...
+
+            gsutil cp <FILE_NAME> gs://<BUCKET_NAME>
+
+###To confirm contents if uploaded,use the command:
+            
+            ls
+            
+#*Is a linux command that is used to list items in a directory*#
+
+
+###Task5: Create a persistent state in Cloud Shell
+
+## you will learn a best practice for using Cloud Shell. 
+
+#The gcloud command often requires specifying values such as a Region or Zone or Project ID. Entering them repeatedly increases the chances of making typing errors. If you use Cloud Shell a lot, you may want to set common values in environment variables and use them instead of typing the actual values.
+
+####Identify available regions
+
+            gcloud compute regions list
+
+
+####Select a region from the list and note the value in any text editor. This region will now be referred to as [YOUR_REGION] in the remainder of the lab.
+
+
+##Create and verify an environment variable
+
+
+#####A:Create an environment variable and replace [YOUR_REGION] with the region you selected in the previous step:
+
+            INFRACLASS_REGION=[YOUR_REGION]
+
+#####B:Verify it with echo:
+
+            echo $INFRACLASS_REGION
+
+
+#ou can use environment variables like this in gcloud commands to reduce the opportunities for typos, and so that you won't have to remember a lot of detailed information.
+
+
+####Append the environment variable to a file
+
+###A:Create a subdirectory for materials used in this class:
+
+            mkdir infraclass
+
+###B:Create a file called config in the infraclass directory:
+
+            
+            touch infraclass/config
+
+###C:Append the value of your Region environment variable to the config file:
+
+            echo INFRACLASS_REGION=$INFRACLASS_REGION >> ~/infraclass/config
+
+###D:Create a second environment variable for your Project ID, replacing [YOUR_PROJECT_ID] with your Project ID. You can find the project ID on the Cloud Console Home page.
+
+            INFRACLASS_PROJECT_ID=[YOUR_PROJECT_ID]
+
+###E:Append the value of your Project ID environment variable to the config file:
+
+
+            echo INFRACLASS_PROJECT_ID=$INFRACLASS_PROJECT_ID >> ~/infraclass/config
+
+
+###F:Use the source command to set the environment variables, and use the echo command to verify that the project variable was set:
+
+            source infraclass/config
+            echo $INFRACLASS_PROJECT_ID
+
+#This gives you a method to create environment variables and to easily recreate them if the Cloud Shell is cycled. However, you will still need to remember to issue the source command each time Cloud Shell is opened.
+
+In the next step you will modify the .profile file so that the source command is issued automatically any time a terminal to Cloud Shell is opened.
+
+
+###G:Close and re-open Cloud Shell. Then issue the echo command again:
+
+            exit
+            
+            
+            gcloud auth login
+            
+            
+            
+            echo $INFRACLASS_PROJECT_ID
+
+            
+###H:Modify the bash profile and create persistence,Edit the shell profile with the following command:
+
+     
+            nano .profile
+
+###I:Add the following line to the end of the file:
+
+            source infraclass/config
+
+#Press Ctrl+O, ENTER to save the file, and then press Ctrl+X to exit nano.
+
+###J:Close and then re-open Shell to cycle the VM.Remember to login again...
+
+            
+###k:Use the echo command to verify that the variable is still set:
+
+
+            echo $INFRACLASS_PROJECT_ID
+
+
+
+
+
+
+
+
+
+
+
