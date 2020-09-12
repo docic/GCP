@@ -11,3 +11,5 @@
 8:console.
 9:Big Query data set
 10:Compute Engine
+11:Examining Billing data
+12:Creating virtual machines
